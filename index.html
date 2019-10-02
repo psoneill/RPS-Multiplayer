@@ -9,7 +9,42 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-2 text-center bg-dark header">
+                <h1 class="text-light">Rock Paper Scissors</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4 col-sm-12">
+                <div id="player1" class="card mr-5 ml-5">
+                    <img id="player1Image" class="card-img-top" src="assets/images/placeholder.png" alt="Selected Character">
+                    <div class="card-body text-center">
+                        <h5 id="player1Name" class="card-title">Player 1</h5>
+                        <p class="card-text"></p>
+                        <a id="player1BtnRock" class="btn btn-primary">Rock</a>
+                        <a id="player1BtnPaper" class="btn btn-primary">Paper</a>
+                        <a id="player1BtnScissors" class="btn btn-primary">Scissors</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-12 align-self-center text-center"> 
+                <!-- <button id="btnAttack" type="button" class="btn btn-danger btn-lg">Attack</button> -->
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div id="player2" class="card mr-5 ml-5">
+                    <img id="player2Image" class="card-img-top" src="assets/images/placeholder.png" alt="Selected Character">
+                    <div class="card-body text-center">
+                        <h5 id="player2Name" class="card-title">Player 2</h5>
+                        <p class="card-text"></p>
+                        <a id="player2BtnRock" class="btn btn-primary">Rock</a>
+                        <a id="player2BtnPaper" class="btn btn-primary">Paper</a>
+                        <a id="player2BtnScissors" class="btn btn-primary">Scissors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -24,7 +59,7 @@
     <!-- Firebase References -->
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-    
+
     <!-- My Javascript -->
     <script src="assets/javascript/game.js" type="text/javascript"></script>
 </body>
