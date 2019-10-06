@@ -119,7 +119,8 @@ $(document).ready(function () {
                 $("#player1Losses").text("Losses: " + losses);
             }
 
-            $("#player1Image,#player2Image").attr("src", "assets/images/placeholder.png");
+            $("#player1Image").attr("src", "assets/images/"+player1Selection+".png");
+            $("#player2Image").attr("src", "assets/images/"+player2Selection+".png");
             player1Selection = "";
             player2Selection = "";
 
@@ -134,6 +135,7 @@ $(document).ready(function () {
 
             setTimeout(function () {
                 gameOver = false;
+                $("#player1Image,#player2Image").attr("src", "assets/images/placeholder.png");
                 $("#player1BtnRock,#player1BtnPaper,#player1BtnScissors").attr("disabled", false);
             }, 1000);
         }
