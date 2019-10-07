@@ -25,6 +25,7 @@ var gameOver = false;
 
 $(document).ready(function () {
 
+    var chatRef = database.ref("/chat");
     var connectionsRef = database.ref("/connections");
 
     // '.info/connected' is a special location provided by Firebase that is updated
@@ -72,7 +73,7 @@ $(document).ready(function () {
         console.log("Errors handled: " + errorObject.code);
     });
 
-    $("button").on("click", function () {
+    $("#player1BtnRock,#player1BtnPaper,#player1BtnScissors").on("click", function () {
         player1Selection = $(this).text();
         $("#player1Image").attr("src", "assets/images/picked.png");
         database.ref().on("value", function (snapshot) {
@@ -140,5 +141,15 @@ $(document).ready(function () {
             }, 1000);
         }
 
+    });
+
+    $("#btnChat").on("click", function () {
+        chatRef.push($("#textboxUser").val());
+    });
+
+    chatRef.on("child_added", function (childSnapshot) {
+        var newChat = $("<h5>");
+        newChat.text(childSnapshot.val());
+        $("#chatBox").prepend(newChat);
     });
 });
