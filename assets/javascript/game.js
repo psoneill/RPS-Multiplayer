@@ -32,7 +32,8 @@ $(document).ready(function () {
     // every time the client's connection state changes. '.info/connected' is a
     // boolean value, true if the client is connected and false if they are not.
     var connectedRef = database.ref(".info/connected");
-
+    var userRef = database.ref("/users");
+    
     // When first loaded or when the connections list changes...
     connectionsRef.on("value", function (snapshot) {
         playerNumber = snapshot.numChildren();
@@ -50,13 +51,14 @@ $(document).ready(function () {
 
             userName = prompt("Welcome! Please enter Your Name");
             // Code for handling the push
-            database.ref().push({ userName: userName });
+            userRef.child(userName).set({ userName: userName });
             // Remove user from the connection list when they disconnect.
             con.onDisconnect().remove();
+            userRef.child(userName).onDisconnect().remove();
         }
     });
 
-    database.ref().on("child_added", function (childSnapshot) {
+    userRef.on("child_added", function (childSnapshot) {
         if ($("#player1Name").text() == "Player 1") {
             $("#player1Name").text(childSnapshot.val().userName);
             if (userName == childSnapshot.val().userName) {
@@ -76,20 +78,20 @@ $(document).ready(function () {
     $("#player1BtnRock,#player1BtnPaper,#player1BtnScissors").on("click", function () {
         player1Selection = $(this).text();
         $("#player1Image").attr("src", "assets/images/picked.png");
-        database.ref().on("value", function (snapshot) {
+        userRef.on("value", function (snapshot) {
             if (!gameOver) {
                 var usersObject = snapshot.val();
                 Object.keys(usersObject).forEach(function (key) {
                     var userHold = usersObject[key].userName;
                     if (userHold == userName) {
-                        database.ref(key).set({ userName: userHold, userSelect: player1Selection, userPicked: true });
+                        userRef.child(key).set({ userName: userHold, userSelect: player1Selection, userPicked: true });
                     }
                 });
             }
         });
     });
 
-    database.ref().on("value", function (snapshot) {
+    userRef.on("value", function (snapshot) {
         var usersObject = snapshot.val();
         var playerTwo = $("#player2Name").text();
 
@@ -129,7 +131,7 @@ $(document).ready(function () {
             Object.keys(usersObject2).forEach(function (key) {
                 var userHold = usersObject2[key].userName;
                 if (userHold == userName || userHold == playerTwo) {
-                    database.ref(key).set({ userName: userHold, userSelect: null, userPicked: false });
+                    userRef.child(key).set({ userName: userHold, userSelect: null, userPicked: false });
                 }
             });
             $("#player1BtnRock,#player1BtnPaper,#player1BtnScissors").attr("disabled", true);
@@ -144,7 +146,7 @@ $(document).ready(function () {
     });
 
     $("#btnChat").on("click", function () {
-        chatRef.push($("#textboxUser").val());
+        chatRef.push(userName + ": " +$("#textboxUser").val());
     });
 
     chatRef.on("child_added", function (childSnapshot) {
